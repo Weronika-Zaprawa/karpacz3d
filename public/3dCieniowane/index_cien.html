@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Karpacz 3D</title>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <link rel="stylesheet" type="text/css" href="./Qgis2threejs.css" />
+    <script src="./threejs/three.min.js"></script>
+    <script src="./threejs/OrbitControls.js"></script>
+    <script src="./threejs/ViewHelper.js"></script>
+    <script src="./Qgis2threejs.js"></script>
+    <script src="./dat-gui/dat.gui.min.js"></script>
+    <script src="./dat-gui_panel.js"></script>
+  </head>
+  <body>
+    <div id="view">
+      <div id="labels"></div>
+      <div id="northarrow"></div>
+      <div id="navigation"></div>
+    </div>
+
+    <!-- popup -->
+    <div id="popup">
+      <div id="closebtn">&times;</div>
+      <div id="popupbar"></div>
+      <div id="popupbody">
+        <div id="popupcontent"></div>
+
+        <!-- query result -->
+        <div id="queryresult">
+          <table id="qr_layername_table">
+            <caption>
+              Nazwa warstwy
+            </caption>
+            <tr>
+              <td id="qr_layername"></td>
+            </tr>
+          </table>
+
+          <table id="qr_coords_table">
+            <caption>
+              Wybrane koordynaty
+            </caption>
+            <tr>
+              <td id="qr_coords"></td>
+            </tr>
+          </table>
+
+          <!-- camera actions -->
+          <div
+            class="action-btn action-zoom"
+            onclick="app.cameraAction.zoomIn(); app.closePopup();"
+          >
+            Przybliż tutaj
+          </div>
+          <div
+            class="action-btn action-move"
+            onclick="app.cameraAction.move(); app.closePopup();"
+          >
+            Przenieś tutaj
+          </div>
+          <div
+            class="action-btn action-orbit"
+            onclick="app.cameraAction.orbit(); app.closePopup();"
+          >
+            Orbituj wokół tego miejsca
+          </div>
+
+          <!-- attributes -->
+          <table id="qr_attrs_table">
+            <caption>
+              Atrybuty
+            </caption>
+          </table>
+        </div>
+
+        <!-- page info -->
+        <div id="pageinfo">
+          <h1>URL Aktualnego widoku</h1>
+          <div><input id="urlbox" type="text" /></div>
+
+          <h1>Skróty Klawiszowe</h1>
+          <table id="usage">
+            <tr>
+              <td colspan="2" class="star">Mysz</td>
+            </tr>
+            <tr>
+              <td>Lewy przycisk + Ruch</td>
+              <td>Orbituj</td>
+            </tr>
+            <tr>
+              <td>Kółko Myszy</td>
+              <td>Przybliż / Oddal</td>
+            </tr>
+            <tr>
+              <td>Prawy przycisk + Ruch</td>
+              <td>Przesuń kamerę</td>
+            </tr>
+
+            <tr>
+              <td colspan="2" class="star">Klawiatura</td>
+            </tr>
+            <tr>
+              <td>Klawisz strzałki</td>
+              <td>Przesuń kamerę</td>
+            </tr>
+            <tr>
+              <td>Shift + Klawisz strzałki</td>
+              <td>Orbituj</td>
+            </tr>
+            <tr>
+              <td>Ctrl + Klawisz strzałki</td>
+              <td>Obróć kamerę</td>
+            </tr>
+            <tr>
+              <td>
+                Shift + Ctrl + Klawisz strzałki w górę / Klawisz strzałki w dół
+              </td>
+              <td>Przybliż / Oddal</td>
+            </tr>
+            <tr>
+              <td>L</td>
+              <td>Włącz / Wyłącz widok etykiet</td>
+            </tr>
+            <tr>
+              <td>R</td>
+              <td>Włącz / Wyłącz orbitowanie</td>
+            </tr>
+            <tr>
+              <td>W</td>
+              <td>Włącz / Wyłącz widok siatki</td>
+            </tr>
+            <tr>
+              <td>Shift + R</td>
+              <td>Resetuj pozycję kamery</td>
+            </tr>
+            <tr>
+              <td>Shift + S</td>
+              <td>Zapisz obraz</td>
+            </tr>
+          </table>
+
+          <h1>Informacje</h1>
+          <div id="about">
+            Wizualizacja wykonana z wykorzystaniem
+            <a href="https://www.qgis.org/" target="_blank">QGIS</a> i wtyczki
+            <a href="https://github.com/minorua/Qgis2threejs" target="_blank"
+              >Qgis2threejs</a
+            >
+            (wersja 2.6).
+            <div>
+              Zasilana przez
+              <a href="https://threejs.org/" target="_blank">three.js</a>,
+              <a href="https://code.google.com/p/dat-gui/" target="_blank"
+                >dat-gui</a
+              >
+              <span id="lib_proj4js">
+                i
+                <a href="https://trac.osgeo.org/proj4js/" target="_blank"
+                  >Proj4js</a
+                ></span
+              >.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- progress bar -->
+    <div id="progress"><div id="bar"></div></div>
+
+    <!-- header and footer -->
+    <div id="header"></div>
+    <div id="footer"></div>
+
+    <script>
+      Q3D.Config.viewpoint = {
+        lookAt: {
+          x: -0.6539301197430811,
+          y: 7.907508517280978,
+          z: -1.4861313512763277e-15,
+        },
+        pos: {
+          x: 59.41613754351248,
+          y: 69.30117835915986,
+          z: 37.748346285650804,
+        },
+      };
+      Q3D.Config.localMode = true;
+      Q3D.Config.northArrow.visible = true;
+      Q3D.Config.northArrow.color = 0x666666;
+      if (typeof proj4 === "undefined")
+        document.getElementById("lib_proj4js").style.display = "none";
+
+      var container = document.getElementById("view"),
+        app = Q3D.application,
+        gui = Q3D.gui;
+
+      app.init(container); // initialize viewer
+      gui.init(); // initialize dat-gui panel
+
+      // load the scene
+      app.loadSceneFile(
+        "./data/index_cien/scene.js",
+        function (scene) {
+          // scene file has been loaded
+          app.start();
+
+          gui.initLayersFolder(scene);
+        },
+        function (scene) {
+          // all relevant files have been loaded
+          // custom plane z range
+          // var zMin = undefined,
+          //   zMax = undefined;
+          // gui.initCustomPlaneFolder(zMin, zMax);
+        }
+      );
+    </script>
+  </body>
+</html>
