@@ -4,60 +4,215 @@
     <meta charset="UTF-8" />
     <title>Karpacz 3D</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="./script.js"></script>
     <meta
       name="viewport"
       content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
   </head>
   <body>
-    <h1 style="width: 100%; text-align: center">Wizualizacja Karpacza 3D</h1>
-    <div
-      style="
-        width: 65%;
-        margin: auto;
-        display: flex;
-        justify-content: space-between;
-        padding-bottom: 12px;
-      "
-    >
-      <a href="./3dCieniowane/index_cien.html" target="_blank"
-        >Wersja cieniowana</a
-      >
+    <div class="main-banner-wrapper">
+      <div class="main-banner-background"></div>
+      <div class="main-banner-foreground">
+        <p class="main-banner-foreground-title">
+          Wizualizacja 3D XIX-wiecznej mapy Sudetów
+        </p>
+        <p class="main-banner-foreground-subtitle">
+          3D visualization of the 19th century map of the Sudetes
+        </p>
+        <div class="scroll-down hidden">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="1.1"
+            width="256"
+            height="256"
+            viewBox="0 0 256 256"
+            xml:space="preserve"
+          >
+            <defs></defs>
+            <g
+              style="
+                stroke: none;
+                stroke-width: 0;
+                stroke-dasharray: none;
+                stroke-linecap: butt;
+                stroke-linejoin: miter;
+                stroke-miterlimit: 10;
+                fill: none;
+                fill-rule: nonzero;
+                opacity: 1;
+              "
+              transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)"
+            >
+              <polygon
+                points="0,38.92 2.83,36.08 45,78.25 87.17,36.08 90,38.92 45,83.92 "
+                style="
+                  stroke: none;
+                  stroke-width: 1;
+                  stroke-dasharray: none;
+                  stroke-linecap: butt;
+                  stroke-linejoin: miter;
+                  stroke-miterlimit: 10;
+                  fill: currentColor;
+                  fill-rule: nonzero;
+                  opacity: 1;
+                "
+                transform="  matrix(1 0 0 1 0 0) "
+              />
+              <polygon
+                points="0,8.92 2.83,6.08 45,48.25 87.17,6.08 90,8.92 45,53.92 "
+                style="
+                  stroke: none;
+                  stroke-width: 1;
+                  stroke-dasharray: none;
+                  stroke-linecap: butt;
+                  stroke-linejoin: miter;
+                  stroke-miterlimit: 10;
+                  fill: currentColor;
+                  fill-rule: nonzero;
+                  opacity: 1;
+                "
+                transform="  matrix(1 0 0 1 0 0) "
+              />
+            </g>
+          </svg>
+        </div>
+        <div class="loading-spinner">
+          <div class="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <span class="loading-spinner-text" id="loadingSpinnerText"></span>
+        </div>
+      </div>
+    </div>
 
-      <a href="./3dPodstawa/index.html" target="_blank">Wersja podstawa</a>
+    <div id="first-section" class="section-wrapper">
+      <div class="section-block">
+        This paper describes a probabilistic framework for appearance based
+        navigation and mapping using spatial and visual appearance data. Like
+        much recent work on appearance based navigation we adopt a bag-of-words
+        approach in which positive or negative observations of visual words in a
+        scene are used to discriminate between already visited and new places.
+        In this paper we add an important extra dimension to the approach. We
+        explicitly model the spatial distribution of visual words as a random
+        graph in which nodes are visual words and edges are distributions over
+        distances. Care is taken to ensure that the spatial model is able to
+        capture the multi-modal distributions of inter-word spacing and account
+        for sensor errors both in word detection and distances. Crucially, these
+        inter-word distances are viewpoint invariant and collectively constitute
+        strong place signatures and hence the impact of using both spatial and
+        visual appearance is marked. We provide results illustrating a
+        tremendous increase in precision-recall area compared to a
+        state-of-the-art visual appearance only systems.
+      </div>
+      <div class="section-block colored-section-block">
+        <a href="./2dPorownanie/index.html" target="_blank" class="anchor"
+          >Zobacz w pełnej skali
+          <svg
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 72 72"
+            width="64px"
+            height="64px"
+          >
+            <path
+              d="M 43 12 C 40.791 12 39 13.791 39 16 C 39 18.209 40.791 20 43 20 L 46.34375 20 L 35.171875 31.171875 C 33.609875 32.733875 33.609875 35.266125 35.171875 36.828125 C 35.951875 37.608125 36.977 38 38 38 C 39.023 38 40.048125 37.608125 40.828125 36.828125 L 52 25.65625 L 52 29 C 52 31.209 53.791 33 56 33 C 58.209 33 60 31.209 60 29 L 60 16 C 60 13.791 58.209 12 56 12 L 43 12 z M 23 14 C 18.037 14 14 18.038 14 23 L 14 49 C 14 53.962 18.037 58 23 58 L 49 58 C 53.963 58 58 53.962 58 49 L 58 41 C 58 38.791 56.209 37 54 37 C 51.791 37 50 38.791 50 41 L 50 49 C 50 49.551 49.552 50 49 50 L 23 50 C 22.448 50 22 49.551 22 49 L 22 23 C 22 22.449 22.448 22 23 22 L 31 22 C 33.209 22 35 20.209 35 18 C 35 15.791 33.209 14 31 14 L 23 14 z"
+            />
+          </svg>
+        </a>
+        <iframe src="./2dPorownanie/index.html"> </iframe>
+      </div>
     </div>
-    <div
-      style="
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-      "
-    >
-      <iframe
-        style="min-width: 500px; width: 49%; height: 70vh"
-        src="./3dCieniowane/index_cien.html"
-        title="Cieniowana wersja"
-      >
-      </iframe>
-      <iframe
-        style="min-width: 500px; width: 49%; height: 70vh"
-        src="./3dPodstawa/index.html"
-        title="Podstawa wersja"
-      >
-      </iframe>
+
+    <div class="section-wrapper">
+      <div class="section-block colored-section-block">
+        <a
+          href="./3dPodstawa/index.html"
+          target="_blank"
+          class="anchor anchor-blue"
+          >Zobacz w pełnej skali
+          <svg
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 72 72"
+            width="64px"
+            height="64px"
+          >
+            <path
+              d="M 43 12 C 40.791 12 39 13.791 39 16 C 39 18.209 40.791 20 43 20 L 46.34375 20 L 35.171875 31.171875 C 33.609875 32.733875 33.609875 35.266125 35.171875 36.828125 C 35.951875 37.608125 36.977 38 38 38 C 39.023 38 40.048125 37.608125 40.828125 36.828125 L 52 25.65625 L 52 29 C 52 31.209 53.791 33 56 33 C 58.209 33 60 31.209 60 29 L 60 16 C 60 13.791 58.209 12 56 12 L 43 12 z M 23 14 C 18.037 14 14 18.038 14 23 L 14 49 C 14 53.962 18.037 58 23 58 L 49 58 C 53.963 58 58 53.962 58 49 L 58 41 C 58 38.791 56.209 37 54 37 C 51.791 37 50 38.791 50 41 L 50 49 C 50 49.551 49.552 50 49 50 L 23 50 C 22.448 50 22 49.551 22 49 L 22 23 C 22 22.449 22.448 22 23 22 L 31 22 C 33.209 22 35 20.209 35 18 C 35 15.791 33.209 14 31 14 L 23 14 z"
+            />
+          </svg>
+        </a>
+        <iframe src="./3dPodstawa/index.html"> </iframe>
+      </div>
+      <div class="section-block">
+        This paper describes a probabilistic framework for appearance based
+        navigation and mapping using spatial and visual appearance data. Like
+        much recent work on appearance based navigation we adopt a bag-of-words
+        approach in which positive or negative observations of visual words in a
+        scene are used to discriminate between already visited and new places.
+        In this paper we add an important extra dimension to the approach. We
+        explicitly model the spatial distribution of visual words as a random
+        graph in which nodes are visual words and edges are distributions over
+        distances. Care is taken to ensure that the spatial model is able to
+        capture the multi-modal distributions of inter-word spacing and account
+        for sensor errors both in word detection and distances. Crucially, these
+        inter-word distances are viewpoint invariant and collectively constitute
+        strong place signatures and hence the impact of using both spatial and
+        visual appearance is marked. We provide results illustrating a
+        tremendous increase in precision-recall area compared to a
+        state-of-the-art visual appearance only systems.
+      </div>
     </div>
-    <div style="display: flex; align-items: center; justify-content: center">
-      <iframe
-        style="min-width: 500px; width: 700px; height: 720px"
-        src="./2dPorownanie/index.html"
-        title="Cieniowana wersja"
-      >
-      </iframe>
+
+    <div class="section-wrapper">
+      <div class="section-block">
+        This paper describes a probabilistic framework for appearance based
+        navigation and mapping using spatial and visual appearance data. Like
+        much recent work on appearance based navigation we adopt a bag-of-words
+        approach in which positive or negative observations of visual words in a
+        scene are used to discriminate between already visited and new places.
+        In this paper we add an important extra dimension to the approach. We
+        explicitly model the spatial distribution of visual words as a random
+        graph in which nodes are visual words and edges are distributions over
+        distances. Care is taken to ensure that the spatial model is able to
+        capture the multi-modal distributions of inter-word spacing and account
+        for sensor errors both in word detection and distances. Crucially, these
+        inter-word distances are viewpoint invariant and collectively constitute
+        strong place signatures and hence the impact of using both spatial and
+        visual appearance is marked. We provide results illustrating a
+        tremendous increase in precision-recall area compared to a
+        state-of-the-art visual appearance only systems.
+      </div>
+      <div class="section-block colored-section-block">
+        <a
+          href="./3dCieniowane/index_cien.html"
+          target="_blank"
+          class="anchor anchor-blue"
+          >Zobacz w pełnej skali
+          <svg
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 72 72"
+            width="64px"
+            height="64px"
+          >
+            <path
+              d="M 43 12 C 40.791 12 39 13.791 39 16 C 39 18.209 40.791 20 43 20 L 46.34375 20 L 35.171875 31.171875 C 33.609875 32.733875 33.609875 35.266125 35.171875 36.828125 C 35.951875 37.608125 36.977 38 38 38 C 39.023 38 40.048125 37.608125 40.828125 36.828125 L 52 25.65625 L 52 29 C 52 31.209 53.791 33 56 33 C 58.209 33 60 31.209 60 29 L 60 16 C 60 13.791 58.209 12 56 12 L 43 12 z M 23 14 C 18.037 14 14 18.038 14 23 L 14 49 C 14 53.962 18.037 58 23 58 L 49 58 C 53.963 58 58 53.962 58 49 L 58 41 C 58 38.791 56.209 37 54 37 C 51.791 37 50 38.791 50 41 L 50 49 C 50 49.551 49.552 50 49 50 L 23 50 C 22.448 50 22 49.551 22 49 L 22 23 C 22 22.449 22.448 22 23 22 L 31 22 C 33.209 22 35 20.209 35 18 C 35 15.791 33.209 14 31 14 L 23 14 z"
+            />
+          </svg>
+        </a>
+        <iframe src="./3dCieniowane/index_cien.html"> </iframe>
+      </div>
     </div>
+    <div class="footer">Weronika Zaprawa®</div>
     <script>
-      let closeModals = document.getElementsByClassName("close-button");
-      console.log(closeModals);
+      initialize();
     </script>
   </body>
 </html>
