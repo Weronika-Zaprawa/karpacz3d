@@ -1,2 +1,3 @@
 ## Karpacz 3D visualisation
-![image](https://user-images.githubusercontent.com/85508406/181302345-3529f766-c2d6-4095-b746-ff905564dccc.png)
+![preview](https://user-images.githubusercontent.com/85508406/186401040-4758cfeb-9b58-40c9-b1fd-dc48687808ef.png)
+
